@@ -305,6 +305,13 @@ namespace PowerApps.Samples
                     }
                     else
                     { throw new Exception(string.Format("Failed to retrieve", response.Content)); }
+
+                    //5) Expand navigation properties of expanded navigation properties (multi-level $expand).
+                    Console.WriteLine("\n-- Nesting $expand parameters in one request -- ");
+                    expand = "tasks?$select=" + String.Join(",", taskProperties) +
+                        "&$expand=regardingobjectid_contact_task($select=" + String.Join(",", contactProperties) +
+                        ";$expand=parentcustomerid_account($select=" + String.Join(",", accountProperties) + "))";
+
                     #endregion Expanding results
 
                     #region FetchXML queries
